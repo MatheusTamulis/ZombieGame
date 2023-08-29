@@ -52,6 +52,7 @@ public class PlayerControl : MonoBehaviour
         //A posição que o Rigidbody ja esta (GetComponent<Rigidbody>().position)
         //Somado com a direção que eu quero me mover (direcao * speed * Time.deltaTime)
 
+        //Movimentação do jogador por segundo
         GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + (direcao * speed * Time.deltaTime));
     }
 }
