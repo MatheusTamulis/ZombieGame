@@ -7,12 +7,15 @@ public class PlayerControl : MonoBehaviour
 
     public int speed;
 
-    
-    
+    float eixoX;
+    float eixoZ;
 
+    Vector3 direcao;
+    
     // Start is called before the first frame update
     void Start()
     {
+        
     }
 
     // Update is called once per frame
@@ -20,13 +23,10 @@ public class PlayerControl : MonoBehaviour
     {
 
         //Os Imputs valem 1, entao quando apertar uma tecla ele ta fazendo meu eixo ficar com +1 ou -1
-        float eixoX = Input.GetAxisRaw("Horizontal");
-        float eixoZ =  Input.GetAxisRaw("Vertical");
-        float eixoY = Input.GetAxisRaw("Jump");
+        eixoX = Input.GetAxisRaw("Horizontal");
+        eixoZ =  Input.GetAxisRaw("Vertical");
 
-        Vector3 direcao = new Vector3(eixoX, eixoY, eixoZ);
-
-        transform.Translate(direcao * speed * Time.deltaTime);
+        direcao = new Vector3(eixoX, 0, eixoZ);
 
         //Fazendo a animação funcionar quando corro (quando meu vector 3 (qualquer eixo) sai de zero)
         if (direcao != Vector3.zero)
@@ -40,5 +40,18 @@ public class PlayerControl : MonoBehaviour
             GetComponent<Animator>().SetBool("Movendo", false);
         }
 
+    }
+
+    void FixedUpdate()
+    {
+        //GetComponent<Rigidbody>().MovePosition PEGANDO A POSIÇÃO DE MOVIMENTO DO PERSONAGEM
+        //(direcao * speed * Time.deltaTime) É A DIREÇÃO QUE QUERO DAR AO MEU PERSONAGEM, É O OBJETIVO DELE, SE MOVER NESSA DIREÇÃO
+        //transform.position + (direcao * speed * Time.deltaTime)); ENTAO PEGO O TRANSFORM.POSITION DO PERSONAGEM E ADICIONO A DIREÇÃO QUE É O VECTOR 3 DIRECAO
+
+        //To pegando meu rigidBody e movendo ele para uma posição (GetComponent<Rigidbody>().MovePosition), que posição?  
+        //A posição que o Rigidbody ja esta (GetComponent<Rigidbody>().position)
+        //Somado com a direção que eu quero me mover (direcao * speed * Time.deltaTime)
+
+        GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + (direcao * speed * Time.deltaTime));
     }
 }
