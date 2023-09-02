@@ -25,8 +25,17 @@ public class EnemieController : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 direcao = player.transform.position - transform.position;
+        float distancia = Vector3.Distance(transform.position, player.transform.position);
 
-        rb.MovePosition(rb.position + direcao.normalized * speed * Time.deltaTime);
+        if (distancia > 2)
+        {
+            Vector3 direcao = player.transform.position - transform.position;
+
+            rb.MovePosition(rb.position + direcao.normalized * speed * Time.deltaTime);
+
+            Quaternion novaRotacao = Quaternion.LookRotation(direcao);
+
+            rb.MoveRotation(novaRotacao);
+        }
     }
 }
